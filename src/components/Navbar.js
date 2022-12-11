@@ -11,7 +11,7 @@ function Navbar({ searchText, setSearchText }) {
     const codeParams = queryParams.get("code");
     if (codeParams && localStorage.getItem("accessToken") === null) {
       const getAccessToken = async () => {
-        await fetch("http://localhost:4000/getAccessToken?code=" + codeParams, {
+        await fetch(`${process.env.REACT_APP_URL}getAccessToken?code=${codeParams}`, {
           method: "GET",
         })
           .then((response) => {
@@ -31,7 +31,7 @@ function Navbar({ searchText, setSearchText }) {
   }, [reRender]);
 
   const getUserData = async () => {
-    await fetch("http://localhost:4000/getUserData", {
+    await fetch(`${process.env.REACT_APP_URL}getUserData`, {
       method: "GET",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("accessToken"),
