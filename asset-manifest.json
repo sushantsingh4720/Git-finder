@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/Git-finder/static/css/main.261754eb.css",
+    "main.js": "/Git-finder/static/js/main.cb1a1249.js",
+    "static/js/787.61755e5e.chunk.js": "/Git-finder/static/js/787.61755e5e.chunk.js",
+    "static/media/home.png": "/Git-finder/static/media/home.a97d03684d98a6063cf5.png",
+    "index.html": "/Git-finder/index.html",
+    "main.261754eb.css.map": "/Git-finder/static/css/main.261754eb.css.map",
+    "main.cb1a1249.js.map": "/Git-finder/static/js/main.cb1a1249.js.map",
+    "787.61755e5e.chunk.js.map": "/Git-finder/static/js/787.61755e5e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.261754eb.css",
+    "static/js/main.cb1a1249.js"
+  ]
+}
