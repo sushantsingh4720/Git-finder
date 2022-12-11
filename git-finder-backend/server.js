@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 // Code being passed from the frontend
 app.get("/getAccessToken", async (req, res) => {
  
-  console.log(req.query.code);
+  // console.log(req.query.code);
   const params =
     "?client_id=" +
     CLIENT_ID +
@@ -29,7 +29,7 @@ app.get("/getAccessToken", async (req, res) => {
     CLIENT_SECRET +
     "&code=" +
     req.query.code;
-    console.log(params);
+    // console.log(params);
   await fetch("https://github.com/login/oauth/access_token" + params, {
     method: "POST",
     headers: { Accept: "application/json" },
@@ -38,7 +38,7 @@ app.get("/getAccessToken", async (req, res) => {
       return response.json();
     })
     .then((data) => {
-        console.log(data);
+        // console.log(data);
       res.json(data);
     });
 });
@@ -46,7 +46,7 @@ app.get("/getAccessToken", async (req, res) => {
 //Access Token is going to pass in as Authorization header
 app.get("/getUserData", async (req, res) => {
   req.get("Authorization"); //Bearer ACCESS_TOKEN
-  console.log(req.get("Authorization"))
+  // console.log(req.get("Authorization"))
   await fetch("https://api.github.com/user", {
     method: "GET",
     headers: { Authorization: req.get("Authorization") },
@@ -55,7 +55,7 @@ app.get("/getUserData", async (req, res) => {
       return response.json();
     })
     .then((data) => {
-     console.log(data);
+      // console.log(data);
       res.json(data);
     });
 });

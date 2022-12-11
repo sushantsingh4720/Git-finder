@@ -15,7 +15,7 @@ function SearchResult() {
         const search = async () => {
             const resp = await fetch(`https://api.github.com/search/users?q=${query}&page=${page}`);
             const response = await resp.json();
-            console.log(response);
+            // console.log(response);
             
             if(response.items){
                 if(page ===1)setPageCount(Math.ceil(response.total_count/30))

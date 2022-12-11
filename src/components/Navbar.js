@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Sidenav from "./Sidenav";
 function Navbar({ searchText, setSearchText }) {
   const [reRender, setReRender] = useState(false);
-  const [userImgUrl, setUserImgUrl] = useState("");
+  const [userInfo, setUserInfo] = useState("");
   const navigate = useNavigate();
-  
+  const [sideNav, setSideNav] = useState(true);
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
     const codeParams = queryParams.get("code");
@@ -17,17 +18,17 @@ function Navbar({ searchText, setSearchText }) {
             return response.json();
           })
           .then((data) => {
-            console.log(data);
+            // console.log(data);
             if (data.access_token) {
               localStorage.setItem("accessToken", data.access_token);
               setReRender(!reRender);
-              getUserData();
             }
           });
       };
       getAccessToken();
     }
-  }, [ reRender]);
+    getUserData();
+  }, [reRender]);
 
   const getUserData = async () => {
     await fetch("http://localhost:4000/getUserData", {
@@ -40,22 +41,24 @@ function Navbar({ searchText, setSearchText }) {
         return response.json();
       })
       .then((data) => {
-        setUserImgUrl("https://avatars.githubusercontent.com/u/95166365?v=4");
+        setUserInfo(data);
+        //  console.log(data);
+        //   localStorage.setItem("user", data.avatar_url);
       });
   };
 
   const loginWithGithub = async () => {
     window.location.assign(
-      "https://github.com/login/oauth/authorize?client_id=" + process.env.REACT_APP_CLIENT_ID
+      "https://github.com/login/oauth/authorize?client_id=" +
+        process.env.REACT_APP_CLIENT_ID
     );
   };
-  
-const logout=()=>{
-  localStorage.removeItem("accessToken");
-  setReRender(!reRender);
-  navigate("/");
-}
-  
+
+  // const logout = () => {
+  //   localStorage.removeItem("accessToken");
+  //   setReRender(!reRender);
+  //   navigate("/");
+  // };
 
   return (
     <div className="navbar">
@@ -63,39 +66,53 @@ const logout=()=>{
         <div className="logo" onClick={(e) => navigate("/")}>
           Git Finder
         </div>
-        <div className="flex-box search-bar-box">
-          <input
-            type="text"
-            className="search-bar"
-            placeholder="🔍 search"
-            onChange={(e) => setSearchText(e.target.value)}
-            onKeyUp={(e) => {
-              const keyCode = e.code;
-              if (keyCode === "Enter") {
-                navigate(`/search?q=${searchText}`);
-                window.location.reload();
-              }
-            }}
-          />
-          <div
-            className="search-btn"
-            onClick={(e) => {
-              navigate(`/search?q=${searchText}`);
-              window.location.reload();
-            }}
-          >
-            🔍
-          </div>
-        </div>
-        <div>
-          { localStorage.getItem("accessToken")? (
-            <div>
-              <button onClick={logout}>Logout</button>
-              {/* <img src={userImgUrl} alt="userImgUrl"></img> */}
+        <div className="right-side-navbor">
+          <div className="flex-box search-bar-box">
+            <input
+              type="text"
+              className="search-bar"
+              placeholder="🔍 search"
+              onChange={(e) => setSearchText(e.target.value)}
+              onKeyUp={(e) => {
+                const keyCode = e.code;
+                if (keyCode === "Enter") {
+                  if (localStorage.getItem("accessToken") === null)
+                    alert("Please! Login");
+                  else {
+                    navigate(`/search?q=${searchText}`);
+                    window.location.reload();
+                  }
+                }
+              }}
+            />
+            <div
+              className="search-btn"
+              onClick={(e) => {
+                console.log("search")
+                    navigate(`/search?q=${searchText}`);
+                    window.location.reload(); 
+              }}
+            >
+              🔍
             </div>
-          ) : (
-            <button onClick={loginWithGithub}>Login with github</button>
-          )}
+          </div>
+          <div className="user-profile">
+            {localStorage.getItem("accessToken") ? (
+              <div className="user-profile">
+                {/* <button onClick={logout}>Logout</button> */}
+                <img
+                  src={userInfo.avatar_url}
+                  alt="userImgUrl"
+                  onClick={(e) => {
+                    setSideNav(!sideNav);
+                  }}
+                ></img>
+                <Sidenav flag={sideNav} />
+              </div>
+            ) : (
+              <button onClick={loginWithGithub}>Login</button>
+            )}
+          </div>
         </div>
       </div>
     </div>
