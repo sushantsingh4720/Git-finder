@@ -22,16 +22,17 @@ const Profile = () => {
     getUserData();
   }, []);
   // const navigate = useNavigate();
+  const date = new Date(user.created_at).toDateString();
 
   return (
     <div className="profile page-box flex-box">
       <div className="profile-container">
         <img src={user.avatar_url} alt="👨" className="profile-img" />
         <div className="profile-item">
-            <div className="profile-row">
-                        <div className="profile-row-title">Id</div>
-                        <div>{user.id}</div>
-                    </div>
+          <div className="profile-row">
+            <div className="profile-row-title">Id</div>
+            <div>{user.id}</div>
+          </div>
           <div className="profile-row">
             <div className="profile-row-title">Username</div>
             <div>{user.login}</div>
@@ -42,7 +43,7 @@ const Profile = () => {
           </div>
           <div className="profile-row">
             <div className="profile-row-title">Created_at</div>
-            <div>{user.created_at}</div>
+            <div>{date}</div>
           </div>
           {/* <div className="profile-row">
                         <div className="profile-row-title">Email</div>

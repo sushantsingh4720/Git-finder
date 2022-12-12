@@ -85,16 +85,28 @@
     margin-left: 1rem;
     padding-left: 1rem;
   }
+  .right-side-navbor {
+    gap: 80px;
+  }
   .nav-content {
     display: flex;
     flex-direction: column;
   }
+  .user-profile {
+    padding-left: 0;
+    margin-left: 0;
+  }
+  .user-profile button {
+    margin: 0;
+  }
   .navbar {
-    height: 9rem;
+    height: 5.5rem;
+    padding-left: 0rem;
+    padding-right: 0rem;
   }
   .logo {
     padding-top: 0;
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
   }
   .search-bar-box {
     padding-right: 20px;
