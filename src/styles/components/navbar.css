@@ -91,6 +91,7 @@
   .nav-content {
     display: flex;
     flex-direction: column;
+    width: 100%;
   }
   .user-profile {
     padding-left: 0;
