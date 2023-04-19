@@ -6,7 +6,7 @@ const Profile = () => {
   const [user, setUser] = useState("");
   useEffect(() => {
     const getUserData = async () => {
-      await fetch(`${process.env.REACT_APP_URL}getUserData`, {
+      await fetch(`${process.env.REACT_APP_URL}/getUserData`, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + localStorage.getItem("accessToken"),
