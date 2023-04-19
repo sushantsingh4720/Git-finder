@@ -11,9 +11,12 @@ function Navbar({ searchText, setSearchText }) {
     const codeParams = queryParams.get("code");
     if (codeParams && localStorage.getItem("accessToken") === null) {
       const getAccessToken = async () => {
-        await fetch(`${process.env.REACT_APP_URL}getAccessToken?code=${codeParams}`, {
-          method: "GET",
-        })
+        await fetch(
+          `${process.env.REACT_APP_URL}/getAccessToken?code=${codeParams}`,
+          {
+            method: "GET",
+          }
+        )
           .then((response) => {
             return response.json();
           })
@@ -31,7 +34,7 @@ function Navbar({ searchText, setSearchText }) {
   }, [reRender]);
 
   const getUserData = async () => {
-    await fetch(`${process.env.REACT_APP_URL}getUserData`, {
+    await fetch(`${process.env.REACT_APP_URL}/getUserData`, {
       method: "GET",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("accessToken"),
@@ -88,9 +91,9 @@ function Navbar({ searchText, setSearchText }) {
             <div
               className="search-btn"
               onClick={(e) => {
-                console.log("search")
-                    navigate(`/search?q=${searchText}`);
-                    window.location.reload(); 
+                console.log("search");
+                navigate(`/search?q=${searchText}`);
+                window.location.reload();
               }}
             >
               🔍
