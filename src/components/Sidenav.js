@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 // import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-export default function Sidenav(flag) {
+export default function Sidenav({ setSideNav, sideNav }) {
   const navigate = useNavigate();
 
   const logout = async () => {
@@ -14,13 +14,25 @@ export default function Sidenav(flag) {
   return (
     <div
       className={`nav-features flex-box ${
-        flag.flag ? "nav-features-active" : ""
+        sideNav ? "nav-features-active" : ""
       }`}
     >
-      <Link to={"/"} className="nav-feature" onClick={(e)=>{console.log(flag.flag=!flag.flag)}}>
+      <Link
+        to={"/"}
+        className="nav-feature"
+        onClick={(e) => {
+          setSideNav(!sideNav);
+        }}
+      >
         Home
       </Link>
-      <Link to={"/profile"} className="nav-feature" onClick={(e)=>{console.log(flag.flag=!flag.flag)}}>
+      <Link
+        to={"/profile"}
+        className="nav-feature"
+        onClick={(e) => {
+          setSideNav(!sideNav);
+        }}
+      >
         Profile
       </Link>
       {/* <Link to={"/file-tracker-frontend/files"} className="nav-feature">

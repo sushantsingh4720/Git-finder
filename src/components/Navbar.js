@@ -1,27 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Sidenav from "./Sidenav";
 function Navbar({ searchText, setSearchText }) {
   const [reRender, setReRender] = useState(false);
   const [userInfo, setUserInfo] = useState("");
-  const navigate = useNavigate();
   const [sideNav, setSideNav] = useState(true);
+  const navigate = useNavigate();
+  const { search } = useLocation();
   useEffect(() => {
-    const queryParams = new URLSearchParams(window.location.search);
-    const codeParams = queryParams.get("code");
-    if (codeParams && localStorage.getItem("accessToken") === null) {
+    if (search && localStorage.getItem("accessToken") === null) {
       const getAccessToken = async () => {
-        await fetch(
-          `${process.env.REACT_APP_URL}/getAccessToken?code=${codeParams}`,
-          {
-            method: "GET",
-          }
-        )
-          .then((response) => {
-            return response.json();
-          })
+        await fetch(`${process.env.REACT_APP_URL}/getAccessToken${search}`, {
+          method: "GET",
+        })
+          .then((response) => response.json())
           .then((data) => {
-            // console.log(data);
+            console.log(data);
             if (data.access_token) {
               localStorage.setItem("accessToken", data.access_token);
               setReRender(!reRender);
@@ -31,7 +25,7 @@ function Navbar({ searchText, setSearchText }) {
       getAccessToken();
     }
     getUserData();
-  }, [reRender]);
+  }, [reRender, search]);
 
   const getUserData = async () => {
     await fetch(`${process.env.REACT_APP_URL}/getUserData`, {
@@ -110,7 +104,7 @@ function Navbar({ searchText, setSearchText }) {
                     setSideNav(!sideNav);
                   }}
                 ></img>
-                <Sidenav flag={sideNav} />
+                <Sidenav setSideNav={setSideNav} sideNav={sideNav} />
               </div>
             ) : (
               <button onClick={loginWithGithub}>Login</button>

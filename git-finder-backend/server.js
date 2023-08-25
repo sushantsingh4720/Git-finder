@@ -8,20 +8,18 @@ const fetch = (...args) =>
 const bodyParser = require("body-parser");
 const app = express();
 app.use(cors());
-const port = process.env.PORT ||4000
+const port = process.env.PORT || 4000;
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 
-app.get('/', (req, res) => {
-    res.send("hii");
-})
+app.get("/", (req, res) => {
+  res.send("hii");
+});
 // Code being passed from the frontend
 app.get("/getAccessToken", async (req, res) => {
- 
-  // console.log(req.query.code);
   const params =
     "?client_id=" +
     CLIENT_ID +
@@ -29,7 +27,7 @@ app.get("/getAccessToken", async (req, res) => {
     CLIENT_SECRET +
     "&code=" +
     req.query.code;
-    // console.log(params);
+  // console.log(params);
   await fetch("https://github.com/login/oauth/access_token" + params, {
     method: "POST",
     headers: { Accept: "application/json" },
@@ -38,7 +36,7 @@ app.get("/getAccessToken", async (req, res) => {
       return response.json();
     })
     .then((data) => {
-        // console.log(data);
+      // console.log(data);
       res.json(data);
     });
 });
